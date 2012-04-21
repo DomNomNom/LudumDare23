@@ -15,7 +15,8 @@ class Engine {
 
 
   Camera camera;
-
+  
+  Level level;
   GameState gameState = new GameState();
 
   Engine() {
@@ -174,6 +175,8 @@ class Engine {
 
     state currentState = state.gameInit; // use changeState() which does proper job of changing this with safe transitions
 
+    int levelCount = 1;
+
     GameState() { }
 
     // has lots of code defining safe transitions and what should be done
@@ -191,7 +194,7 @@ class Engine {
       else if (currentState == state.menu) {
         if (changeTo == state.game) {
           removeEntityGroup(group.menu);
-          loadLevel();
+          loadLevel(levelCount);
         }
         else wasSafe = false;
       }
@@ -211,19 +214,24 @@ class Engine {
       }
       else if (currentState == state.game) {
         if (changeTo == state.paused) {
-          for (Entity e : groups.get(group.game)) e.updating = false; // freeze game
+          for (Entity e : groups.get(group.game))
+            e.updating = false; // freeze game
           addEntity(new PauseMenu());
         }
         else if (changeTo == state.gameOver) {
           removeEntityGroup(group.game);
           addEntity(new GameOver());
         }
+        else if (changeTo == state.game) {
+          removeEntityGroup(group.game);
+          loadLevel(levelCount);
+        }
         else wasSafe = false;
       }
       else if (currentState == state.gameOver) {
         if (changeTo == state.game) {
           removeEntityGroup(group.menu);
-          loadLevel();
+          loadLevel(levelCount);
         }
         else if (changeTo == state.menu) {
           removeEntityGroup(group.menu);
@@ -240,12 +248,9 @@ class Engine {
     }
   }
   
-  void loadLevel() {
+  void loadLevel(int levelCount) {
     println("loadlevel");
-    player = new Player(350, 300);
-    addEntity(player);
-    addEntity(new Mover(100, 110, 45));
-    addEntity(new Mover(250, 200, 75));
+    level = new Level(levelCount);
   }
 }
 
