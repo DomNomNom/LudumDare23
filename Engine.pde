@@ -73,12 +73,12 @@ class Engine {
   \*******************************************************/
   class Physics {
     // if the objects in the corresponding groups collide, then do a certian action
-    Map<group, group> bothDie = new HashMap<group, group>();
-    Map<group, group> keyDies = new HashMap<group, group>();
+    Map<group, group> nomNom = new HashMap<group, group>();
+    //Map<group, group> keyDies = new HashMap<group, group>();
 
     Physics() {
-      bothDie.put(group.bullet, group.enemy);
-      keyDies.put(group.bullet, group.levelBounds);
+      nomNom.put(group.creature, group.creature);
+      //keyDies.put(group.bullet, group.levelBounds);
     }
 
     void doCollisions() {
@@ -86,16 +86,31 @@ class Engine {
       these are quite lengthy versions of saying
       for all in a, if they collide with any of b, do something (kill one of them)
       */
-      for (group g : bothDie.keySet()) {
-        for (Entity a : groups.get(g)) {
-          for (Entity b : groups.get(bothDie.get(g))) {
+      for (group g : nomNom.keySet()) {
+        for (Entity a_ : groups.get(g)) {
+          Creature a = (Creature) a_;
+          for (Entity b_ : groups.get(nomNom.get(g))) {
+            Creature b = (Creature) b_;
+            if (a == b) continue; // don't eat yourself! D:
+
             if (a.collidesWith(b)) {
-              a.die();
-              b.die();
+              println("COLLISION");
+              // TODO: adjust the rate
+              float transfer = PI * pow(// amount OmNomNomed from b by a (the collision area)
+                PVector.dist(a.pos, b.pos) - a.radius - b.radius,
+                2
+              ); 
+              
+              if (b.isBigger(a))
+                transfer *= -1; // transfer the other way
+                
+              a.addArea( transfer);
+              b.addArea(-transfer);
             }
           }
         }
       }
+      /*
       for (group g : keyDies.keySet()) {
         for (Entity a : groups.get(g)) {
           for (Entity b : groups.get(keyDies.get(g))) {
@@ -104,7 +119,7 @@ class Engine {
             }
           }
         }
-      }
+      }*/
     }
 
   }
@@ -135,7 +150,7 @@ class Engine {
       }
       else if (currentState == state.menu) {
         if (changeTo == state.game) {
-          player = new Player(300, 200);
+          player = new Player(350, 300);
           addEntity(player);
           addEntity(new Mover(100, 100, 50));
           addEntity(new Mover(250, 200, 75));

@@ -1,17 +1,23 @@
 class Player extends Creature {
   PVector target;
 
+  final static float spriteRadius = 50;
+
   float movementSpeed = .2;
   float angle;
   float rotateSpeed = .01;
 
   Player(float x, float y) {
-    super(50);
+    super(spriteRadius);
     pos = new PVector(x, y);
     target = new PVector(0,0);
-    groups = new group[] {group.game, group.player};
+    groups = new group[] {group.game, group.player, group.creature};
     drawLayer = layer.player;
     animation = resources.animations.get("player");
+  }
+
+  boolean isBigger(Creature c) {
+    return (this.radius >= c.radius); // the player is dominant in the equal case
   }
 
   void shoot() {
@@ -44,7 +50,10 @@ class Player extends Creature {
     pushMatrix();
       translate(pos.x, pos.y);
       rotate(angle);
+      noSmooth(); // note: smoothed image + rotating + smoothing = crap
+      scale(radius/spriteRadius);
       animation.draw();
+      smooth();
     popMatrix();
     
     // Target line

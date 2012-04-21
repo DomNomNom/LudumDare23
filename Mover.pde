@@ -5,13 +5,13 @@ class Mover extends Creature {
     pos = new PVector( x,  y);
     vel = new PVector(.0, .0);
     drawLayer = layer.enemy;
-    groups = new group[] {group.game, group.enemy};
+    groups = new group[] {group.game, group.enemy, group.creature};
   }
 
   void draw() { // TODO: make a animation for this
     translate(pos.x, pos.y);
     if (animation == null)
-      ellipse(0, 0, size.x, size.y);
+      ellipse(0, 0, radius, radius);
     else
       animation.draw();
   }

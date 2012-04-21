@@ -3,11 +3,32 @@ class Creature extends Entity {
   
   Creature(float rad) {
     radius = rad;
-    size = new PVector(radius, radius);
+    size = new PVector(0, 0); // DON'T USE THIS
+    groups = new group[] {group.creature};
   }
   
+  float getArea() {
+    return PI * radius * radius;
+  }
+  
+  void addArea(float v) {
+    setArea(getArea() + v);
+  }
+  
+  void setArea(float v) {
+    if (v <= 0) {
+      println("OMG I'm dead!");
+      radius = 0;
+      die();
+      return;
+    }
+    
+    radius = sqrt(v/PI); // inverse of 
+  }
+  
+  
   boolean isBigger(Creature c) {
-    return (this.radius >= c.radius);
+    return (this.radius > c.radius);
   }
   
   boolean collidesWith(Entity e) {

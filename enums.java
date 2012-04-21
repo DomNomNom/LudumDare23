@@ -19,6 +19,7 @@ enum state {
 enum group {
   background,
   game,
+  creature,
   player,
   bullet,
   enemy,
