@@ -2,8 +2,11 @@ class Player extends Creature {
   PVector target;
 
   final static float spriteRadius = 50;
+  float scaleFactor = 1;
 
-  float movementSpeed = .2;
+  float controlSpeed = .001;
+  float friction = .005;
+
   float angle;
   float rotateSpeed = .01;
 
@@ -36,10 +39,9 @@ class Player extends Creature {
   void update(float dt) {
     PVector acc = new PVector(input.control.x, input.control.y);
     acc.normalize();
-    acc.mult(.001);
+    acc.mult(controlSpeed / scaleFactor);
 
-    if (input.control.mag() == 0)
-      acc.add(PVector.mult(vel, -.005)); // friction
+    acc.add(PVector.mult(vel, -friction)); // friction
 
     vel.add(PVector.mult(acc, dt));
 
@@ -56,13 +58,23 @@ class Player extends Creature {
     animation.update(dt);
   }
 
+  void die() {
+    dead = true;
+  }
+
   void draw() {
+    scaleFactor = spriteRadius/radius;
+    if (scaleFactor <= 0.5) {
+      scaleFactor = 1;
+      die();
+      return;
+    }
     fill(color(40, 200, 40));
     pushMatrix();
       translate(pos.x, pos.y);
       rotate(angle);
       noSmooth(); // note: smoothed image + rotating + smoothing = crap
-      scale(radius/spriteRadius);
+      scale(1.0/scaleFactor);
       animation.draw();
       smooth();
     popMatrix();

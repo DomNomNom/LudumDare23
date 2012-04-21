@@ -14,4 +14,15 @@ class OutOfBounds extends Entity {
       abs(point.y - pos.y) > size.y/2
     );
   }
+  
+  boolean collidesWith(Creature c) {
+    float r = c.radius;
+    return (
+      // are any of up/down/left/right points out of bounds
+      collidesWith(PVector.add(c.pos, new PVector( r,  0) )) ||
+      collidesWith(PVector.add(c.pos, new PVector(-r,  0) )) ||
+      collidesWith(PVector.add(c.pos, new PVector( 0,  r) )) ||
+      collidesWith(PVector.add(c.pos, new PVector( 0, -r) ))
+    );
+  }
 }

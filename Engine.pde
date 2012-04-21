@@ -7,16 +7,21 @@
 class Engine {
   // entity handling
   Player player;
+  Background background;
   Physics physics = new Physics();
   private ArrayList<Entity> entities = new ArrayList<Entity>();
   private HashMap<group, ArrayList<Entity>> groups = new HashMap<group, ArrayList<Entity>>();
   float prevTime;
+
+
+  Camera camera;
 
   GameState gameState = new GameState();
 
   Engine() {
     for (group g : group.values()) // have a arraylist for every group
       groups.put(g, new ArrayList<Entity>());
+    camera = new Camera();
     gameState.changeState(state.menu);
     prevTime = millis();
   }
@@ -26,26 +31,48 @@ class Engine {
     float dt = mills - prevTime;
     prevTime = mills;
 
-    physics.doCollisions();
-
-    // update and remove
-    for (int i=entities.size()-1; i>=0; --i) { // We are deleting from the array so iterating backwards makes more sense
-      Entity e = entities.get(i);
-      if (e.updating) {
+    // update
+    for (Entity e : entities)
+      if (e.updating)
         e.update(dt);
-      }
-      if (e.dead) removeEntity(e);
-    }
+    removeDeadEntities();
+        
+    physics.doCollisions();
+    
+    removeDeadEntities();
 
     // draw
     Collections.sort(entities); // ensure we are draw background to foreground
-    for (Entity e : entities) {
-      if (e.drawLayer.ordinal() <= layer.invisible.ordinal()) break; // no need to draw invisible stuff
+
+    pushMatrix(); pushStyle();
+      background.draw();
+    popStyle(); popMatrix();
+
+    pushMatrix();
+      camera.shiftView();
+      for (Entity e : groups.get(group.game)) {
+        if (e.drawLayer.ordinal() <= layer.invisible.ordinal()) break; // no need to draw invisible stuff
+        pushMatrix(); pushStyle();
+          e.draw();
+        popStyle(); popMatrix(); // ensure no graphical settings are transfered
+      }
+    popMatrix();
+
+    // draw menus
+    for (Entity e : groups.get(group.menu)) {
       pushMatrix(); pushStyle();
         e.draw();
       popStyle(); popMatrix(); // ensure no graphical settings are transfered
-    }
+    }  
+    
     //println(entities); // DEBUG
+  }
+
+  void removeDeadEntities() {
+    for (int i=entities.size()-1; i>=0; --i) { // We are deleting from the array so iterating backwards makes more sense
+      Entity e = entities.get(i);
+      if (e.dead) removeEntity(e);
+    }
   }
 
   void addEntity(Entity e) {
@@ -94,7 +121,6 @@ class Engine {
             if (a == b) continue; // don't eat yourself! D:
 
             if (a.collidesWith(b)) {
-              println("COLLISION");
               // TODO: adjust the rate
               float transfer = PI * pow(// amount OmNomNomed from b by a (the collision area)
                 PVector.dist(a.pos, b.pos) - a.radius - b.radius,
@@ -142,7 +168,7 @@ class Engine {
 
       if (currentState == state.gameInit) {
         if (changeTo == state.menu) {
-          addEntity(new Background());
+          background = new Background();
           addEntity(new OutOfBounds());
           addEntity(new Menu());
         }
@@ -152,7 +178,7 @@ class Engine {
         if (changeTo == state.game) {
           player = new Player(350, 300);
           addEntity(player);
-          addEntity(new Mover(100, 110, 65));
+          addEntity(new Mover(100, 110, 45));
           addEntity(new Mover(250, 200, 75));
           removeEntityGroup(group.menu);
         }

@@ -3,7 +3,7 @@ class PauseMenu extends Entity {
   float centerBarHeight;
 
   PauseMenu() {
-    groups = new group[] {group.pauseMenu};
+    groups = new group[] {group.menu, group.pauseMenu};
 
     size = new PVector(width, height);
     drawLayer = layer.menu;
@@ -11,6 +11,7 @@ class PauseMenu extends Entity {
   }
 
   void draw() {
+    println("DING");
     fill(0, 100);
     rect(center.x, center.y, width, height         );
     rect(center.x, center.y, width, centerBarHeight);
