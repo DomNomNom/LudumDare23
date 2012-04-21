@@ -38,10 +38,12 @@ class Input {
     if (pressDir == 1) { // keyDown event
       if (isEvent("pause"))
         engine.gameState.changeState(state.paused); // changeState is smart enough to unpause if paused
+      else if (isEvent("retry")) 
+        engine.gameState.changeState(state.game);
       else if (isEvent("select")) {
         if (engine.gameState.currentState == state.menu)
           engine.gameState.changeState(state.game);
-        else if (engine.gameState.currentState == state.paused)
+        else
           engine.gameState.changeState(state.menu);
       }
     }

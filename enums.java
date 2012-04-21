@@ -13,6 +13,7 @@ enum state {
   menu,
   paused,
   game,
+  gameOver,
 }
 
 // groups that an entity can be in. they are not mutually exclusive.
@@ -26,4 +27,5 @@ enum group {
   levelBounds,
   menu,
   pauseMenu,
+  gameOverMenu,
 }

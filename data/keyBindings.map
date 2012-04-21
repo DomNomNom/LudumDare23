@@ -7,6 +7,7 @@ comments are just any lines that do not include the seperator (double lined righ
 */
 
 pause=>p
+retry=>r
 select=>SPACE
 exit_game=>ESCAPE
 
@@ -16,7 +17,7 @@ down=>DOWN
 left=>LEFT
 right=>RIGHT
 
-up=>w
-down=>s
-left=>a
-right=>d
+//up=>w
+//down=>s
+//left=>a
+//right=>d

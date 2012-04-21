@@ -2,10 +2,10 @@ class Player extends Creature {
   PVector target;
 
   final static float spriteRadius = 50;
-  float scaleFactor = 1;
+  float scaleFactor;
 
-  float controlSpeed = .001;
-  float friction = .005;
+  final float controlSpeed = .001;
+  final float friction = .005;
 
   float angle;
   float rotateSpeed = .01;
@@ -17,6 +17,7 @@ class Player extends Creature {
     groups = new group[] {group.game, group.player, group.creature};
     drawLayer = layer.player;
     animation = resources.animations.get("player");
+    scaleFactor = 1;
   }
 
   boolean isBigger(Creature c) {
@@ -64,7 +65,7 @@ class Player extends Creature {
 
   void draw() {
     scaleFactor = spriteRadius/radius;
-    if (scaleFactor <= 0.5) {
+    if (scaleFactor >= 30) {
       scaleFactor = 1;
       die();
       return;

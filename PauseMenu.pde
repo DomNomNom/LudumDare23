@@ -11,7 +11,6 @@ class PauseMenu extends Entity {
   }
 
   void draw() {
-    println("DING");
     fill(0, 100);
     rect(center.x, center.y, width, height         );
     rect(center.x, center.y, width, centerBarHeight);

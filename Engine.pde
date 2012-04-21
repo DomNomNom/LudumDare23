@@ -36,9 +36,7 @@ class Engine {
       if (e.updating)
         e.update(dt);
     removeDeadEntities();
-        
     physics.doCollisions();
-    
     removeDeadEntities();
 
     // draw
@@ -65,8 +63,16 @@ class Engine {
       popStyle(); popMatrix(); // ensure no graphical settings are transfered
     }  
     
+    // game over check
+    if (gameState.currentState == state.game && (player == null || player.dead) ) 
+      gameState.changeState(state.gameOver);
+    
     //println(entities); // DEBUG
   }
+
+  // ====== end main game loop ======
+
+
 
   void removeDeadEntities() {
     for (int i=entities.size()-1; i>=0; --i) { // We are deleting from the array so iterating backwards makes more sense
@@ -147,7 +153,7 @@ class Engine {
         }
       }*/
     }
-
+    
   }
 
   /*******************************************************\
@@ -176,11 +182,8 @@ class Engine {
       }
       else if (currentState == state.menu) {
         if (changeTo == state.game) {
-          player = new Player(350, 300);
-          addEntity(player);
-          addEntity(new Mover(100, 110, 45));
-          addEntity(new Mover(250, 200, 75));
           removeEntityGroup(group.menu);
+          loadLevel();
         }
         else wasSafe = false;
       }
@@ -203,6 +206,21 @@ class Engine {
           for (Entity e : groups.get(group.game)) e.updating = false; // freeze game
           addEntity(new PauseMenu());
         }
+        else if (changeTo == state.gameOver) {
+          removeEntityGroup(group.game);
+          addEntity(new GameOver());
+        }
+        else wasSafe = false;
+      }
+      else if (currentState == state.gameOver) {
+        if (changeTo == state.game) {
+          removeEntityGroup(group.menu);
+          loadLevel();
+        }
+        else if (changeTo == state.menu) {
+          removeEntityGroup(group.menu);
+          addEntity(new Menu());
+        }
         else wasSafe = false;
       }
       else wasSafe = false;
@@ -212,6 +230,13 @@ class Engine {
       else
         println("OMG, you totally did not just try to change from '" +currentState+ "' to '" +changeTo+ "'. I hate you.");
     }
+  }
+  
+  void loadLevel() {
+    player = new Player(350, 300);
+    addEntity(player);
+    addEntity(new Mover(100, 110, 45));
+    addEntity(new Mover(250, 200, 75));
   }
 }
 
