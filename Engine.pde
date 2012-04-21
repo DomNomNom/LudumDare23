@@ -62,7 +62,7 @@ class Engine {
         e.draw();
       popStyle(); popMatrix(); // ensure no graphical settings are transfered
     }  
-    
+    removeDeadEntities();
     // game over check
     if (gameState.currentState == state.game && (player == null || player.dead) ) 
       gameState.changeState(state.gameOver);
@@ -95,8 +95,9 @@ class Engine {
 
   // removes all entities that are in the given group.
   void removeEntityGroup(group g) {
-    entities.removeAll(groups.get(g));
-    groups.put(g, new ArrayList<Entity>());
+    for (Entity e : groups.get(g))
+      removeEntity(e);
+    //groups.put(g, new ArrayList<Entity>());  // we shouldn't need this
   }
 
 
@@ -233,6 +234,7 @@ class Engine {
   }
   
   void loadLevel() {
+    println("loadlevel");
     player = new Player(350, 300);
     addEntity(player);
     addEntity(new Mover(100, 110, 45));

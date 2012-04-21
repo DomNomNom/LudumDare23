@@ -4,7 +4,7 @@ class Creature extends Entity {
   Creature(float rad) {
     radius = rad;
     size = new PVector(0, 0); // DON'T USE THIS
-    groups = new group[] {group.creature};
+    groups = new group[] {group.creature, group.game};
   }
   
   float getArea() {

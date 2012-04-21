@@ -60,6 +60,7 @@ class Player extends Creature {
   }
 
   void die() {
+    println("OMG THE PLAYER DIED!");
     dead = true;
   }
 

@@ -15,6 +15,10 @@ class Input {
   HashMap<String, Integer> keyCodes; // maps key litterals to keycodes (don't change this)
   String keyValueSeparator = "=>"; // seperates key/values in the .map files
   int currentKey;
+  
+
+  Queue<Integer> keyCodeQueue;// = new ArrayQueue<Integer>();
+  Queue<Integer> pressDirQueue;// = new ArrayQueue<Integer>();
 
   Input() {
     initKeyCodes();
@@ -95,6 +99,7 @@ void mouseMoved() {
 void mousePressed() {
   if (engine.player != null) engine.player.shoot();
 }
+
 
 void keyPressed()  { input.handleKeyEvent(keyCode,  1); }
 void keyReleased() { input.handleKeyEvent(keyCode, -1); }

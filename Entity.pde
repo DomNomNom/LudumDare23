@@ -12,10 +12,19 @@ class Entity implements Comparable<Entity> {
   layer drawLayer;
   Animation animation;
   
-  boolean dead = false;     // Identifies whether it should be removed
-  boolean updating = true;  // We may not want to update but draw (eg. player] when paused)
+  boolean dead;     // Identifies whether it should be removed
+  boolean updating;  // We may not want to update but draw (eg. player] when paused)
 
   group[] groups = {group.game};
+
+  Entity() {
+    pos  = new PVector(  0,   0);
+    vel  = new PVector(  0,   0);
+    size = new PVector(100, 100);
+    dead = false;
+    updating = true;
+  }
+    
 
   boolean inGroup(group g) {
     for (group my_group : groups)
