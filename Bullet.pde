@@ -1,5 +1,5 @@
 class Bullet extends Entity {
-  final float speed = .5;
+  final float speed = .05;
   float angle;
 
   Bullet(PVector spawnPos, float angle) {

@@ -137,8 +137,8 @@ class Engine {
         if (changeTo == state.game) {
           player = new Player(300, 200);
           addEntity(player);
-          addEntity(new Mover(100, 100));
-          addEntity(new Mover(250, 200));
+          addEntity(new Mover(100, 100, 50));
+          addEntity(new Mover(250, 200, 75));
           removeEntityGroup(group.menu);
         }
         else wasSafe = false;

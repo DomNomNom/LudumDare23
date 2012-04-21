@@ -1,10 +1,12 @@
-class Player extends Entity {
+class Player extends Creature {
   PVector target;
 
   float movementSpeed = .2;
   float angle;
+  float rotateSpeed = .01;
 
   Player(float x, float y) {
+    super(50);
     pos = new PVector(x, y);
     target = new PVector(0,0);
     groups = new group[] {group.game, group.player};
@@ -13,6 +15,7 @@ class Player extends Entity {
   }
 
   void shoot() {
+    /* // NO SHOOTING IN THIS GAME!
     if (updating) {
       // spawn a bullet
       engine.addEntity(new Bullet(pos, angle));
@@ -21,6 +24,7 @@ class Player extends Entity {
       resources.sounds.get("shot").rewind();
       resources.sounds.get("shot").play();
     }
+    */
   }
 
   void update(float dt) {
@@ -30,9 +34,7 @@ class Player extends Entity {
     vel.mult(movementSpeed);
     move(dt);
 
-    target.x = input.mousePos.x;
-    target.y = input.mousePos.y;
-    angle = atan2(target.y - pos.y, target.x - pos.x);
+    angle += rotateSpeed;
 
     animation.update(dt);
   }
@@ -44,7 +46,9 @@ class Player extends Entity {
       rotate(angle);
       animation.draw();
     popMatrix();
+    
+    // Target line
     stroke(255, 100);
-    line(pos.x, pos.y, target.x, target.y);
+    //line(pos.x, pos.y, target.x, target.y);
   }
 }

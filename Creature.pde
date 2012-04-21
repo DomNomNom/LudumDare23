@@ -14,16 +14,17 @@ class Creature extends Entity {
     // if their center is within us
     if (collidesWith(e.pos)) return true;
   
-    // p is the point on our circumference closest to the position of e
+    // p is the point on our circumference closest to the e's position
     PVector p = PVector.sub(e.pos, pos);
     p.normalize();
     p.mult(radius);
     p.add(pos);
+    
+    // does the e collide with this point
     return e.collidesWith(p);
   }
   
   boolean collidesWith(PVector point) {
-   println("DONG: " + (PVector.dist(point, pos) < radius));
     return (PVector.dist(point, pos) < radius);
   }
 }
