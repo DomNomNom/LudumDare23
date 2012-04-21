@@ -1,0 +1,22 @@
+/*
+Key bindings.
+It is mapped action->key where action is hard coded and key is defined in keyCodes.map
+Modify at will.
+
+comments are just any lines that do not include the seperator (double lined right arrow)
+*/
+
+pause=>p
+select=>SPACE
+exit_game=>ESCAPE
+
+// These 4 binds will be over written by the wasd config as it follow later
+up=>UP
+down=>DOWN
+left=>LEFT
+right=>RIGHT
+
+up=>w
+down=>s
+left=>a
+right=>d
