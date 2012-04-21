@@ -34,10 +34,21 @@ class Player extends Creature {
   }
 
   void update(float dt) {
+    PVector acc = new PVector(input.control.x, input.control.y);
+    acc.normalize();
+    acc.mult(.001);
+
+    if (input.control.mag() == 0)
+      acc.add(PVector.mult(vel, -.005)); // friction
+
+    vel.add(PVector.mult(acc, dt));
+
+    /*
     vel.x = input.control.x; // deep copy as we don't want to modify input.
     vel.y = input.control.y;
     vel.normalize();
     vel.mult(movementSpeed);
+    */
     move(dt);
 
     angle += rotateSpeed;

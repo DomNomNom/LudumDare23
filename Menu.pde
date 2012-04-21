@@ -15,6 +15,6 @@ class Menu extends Entity {
     textFont(resources.fonts.get("pauseLabel"), 26);
     text("The universe needs to get tiny!", center.x, center.y);
     
-    text("Press Spacebar to get tiny", center.x, 1.5*center.y);
+    text("Press SPACEbar to get tiny", center.x, 1.5*center.y);
   }
 }
