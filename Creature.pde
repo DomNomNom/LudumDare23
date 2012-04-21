@@ -17,7 +17,6 @@ class Creature extends Entity {
   
   void setArea(float v) {
     if (v <= 0) {
-      println("OMG I'm dead!");
       radius = 0;
       die();
       return;

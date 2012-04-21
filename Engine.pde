@@ -31,6 +31,9 @@ class Engine {
     float dt = mills - prevTime;
     prevTime = mills;
 
+    // input
+    input.pollEvents();
+
     // update
     for (Entity e : entities)
       if (e.updating)
@@ -95,7 +98,11 @@ class Engine {
 
   // removes all entities that are in the given group.
   void removeEntityGroup(group g) {
-    for (Entity e : groups.get(g))
+    ArrayList<Entity> toRemove = new ArrayList();
+    for (Entity e : groups.get(g)) // deep copy
+      toRemove.add(e);
+
+    for (Entity e : toRemove)
       removeEntity(e);
     //groups.put(g, new ArrayList<Entity>());  // we shouldn't need this
   }

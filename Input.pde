@@ -15,14 +15,18 @@ class Input {
   HashMap<String, Integer> keyCodes; // maps key litterals to keycodes (don't change this)
   String keyValueSeparator = "=>"; // seperates key/values in the .map files
   int currentKey;
-  
 
-  Queue<Integer> keyCodeQueue;// = new ArrayQueue<Integer>();
-  Queue<Integer> pressDirQueue;// = new ArrayQueue<Integer>();
+  Queue<Integer> keyCodeQueue  = new LinkedList<Integer>();
+  Queue<Integer> pressDirQueue = new LinkedList<Integer>();
 
   Input() {
     initKeyCodes();
     initKeyMap();
+  }
+
+  void pollEvents() {
+    while (! keyCodeQueue.isEmpty())
+      handleKeyEvent(keyCodeQueue.poll(), pressDirQueue.poll());
   }
 
   boolean isEvent(String event) { // small funtion to save the coder some typing
@@ -100,6 +104,9 @@ void mousePressed() {
   if (engine.player != null) engine.player.shoot();
 }
 
-
+/*
 void keyPressed()  { input.handleKeyEvent(keyCode,  1); }
 void keyReleased() { input.handleKeyEvent(keyCode, -1); }
+*/
+void keyPressed()  { input.keyCodeQueue.add(keyCode); input.pressDirQueue.add( 1); }
+void keyReleased() { input.keyCodeQueue.add(keyCode); input.pressDirQueue.add(-1); }
