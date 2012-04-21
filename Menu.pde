@@ -10,11 +10,11 @@ class Menu extends Entity {
     // game label
     fill(250);
     textFont(resources.fonts.get("pauseLabel"), 48);
-    text("FireEngine", center.x, .8*center.y);
+    text("Get Tiny", center.x, .8*center.y);
     
     textFont(resources.fonts.get("pauseLabel"), 26);
-    text("The metagame", center.x, center.y);
+    text("The universe needs to get tiny!", center.x, center.y);
     
-    text("Press Spacebar to win", center.x, 1.5*center.y);
+    text("Press Spacebar to get tiny", center.x, 1.5*center.y);
   }
 }

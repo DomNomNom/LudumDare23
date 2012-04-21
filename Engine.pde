@@ -152,7 +152,7 @@ class Engine {
         if (changeTo == state.game) {
           player = new Player(350, 300);
           addEntity(player);
-          addEntity(new Mover(100, 100, 50));
+          addEntity(new Mover(100, 110, 65));
           addEntity(new Mover(250, 200, 75));
           removeEntityGroup(group.menu);
         }
