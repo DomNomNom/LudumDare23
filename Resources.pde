@@ -7,19 +7,21 @@
 class Resources {
   Map<String, Animation  > animations = new HashMap<String, Animation  >();
   Map<String, PFont      > fonts      = new HashMap<String, PFont      >();
-  //Map<String, AudioPlayer> sounds     = new HashMap<String, AudioPlayer>();
+  Map<String, AudioPlayer> sounds     = new HashMap<String, AudioPlayer>();
   
   Resources() {
     animations.put("player", new Animation("player_0", 7, 1000, true));
 
     fonts.put("pauseLabel", loadFont("fonts/CharterBT-Italic-48.vlw"));
 
-    //sounds.put("shot", minim.loadFile("audio/shot.wav"));
+    sounds.put("transfer", minim.loadFile("audio/transfer.wav"));
+    sounds.get("transfer").play();
+    println("play: " + sounds.get("transfer").isPlaying());
   }
 
   // stop all audio
   void stop() {
-//    for (AudioPlayer p : sounds.values())
-//      p.close();
+    for (AudioPlayer p : sounds.values())
+      p.close();
   }  
 }

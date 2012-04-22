@@ -4,11 +4,16 @@ class Player extends Creature {
   final static float spriteRadius = 50;
   float scaleFactor;
 
-  final float controlSpeed = .001;
+  final float controlSpeed = .0007;
   final float friction = .005;
 
   float angle;
   float rotateSpeed = .01;
+  
+  // sound
+  boolean didCollide;
+  boolean prevCollide;
+  
 
   Player(float x, float y) {
     super(spriteRadius);
@@ -18,23 +23,31 @@ class Player extends Creature {
     drawLayer = layer.player;
     animation = resources.animations.get("player");
     scaleFactor = 1;
+    didCollide = false;
+    
+    resources.sounds.get("transfer").loop();
+    resources.sounds.get("transfer").play();
+    
   }
 
   boolean isBigger(Creature c) {
     return (this.radius >= c.radius); // the player is dominant in the equal case
   }
 
-  void shoot() {
-    /* // NO SHOOTING IN THIS GAME!
-    if (updating) {
-      // spawn a bullet
-      engine.addEntity(new Bullet(pos, angle));
+  boolean collidesWith(Entity e) {
+    boolean collision = super.collidesWith(e);
+    if (collision) didCollide = true;
+    return collision;
+  }
+  
+  boolean collidesWith(PVector point) {
+    boolean collision = super.collidesWith(point);
+    if (collision) didCollide = true;
+    return collision;
+  }
 
-      // play the shooting sound
-      resources.sounds.get("shot").rewind();
-      resources.sounds.get("shot").play();
-    }
-    */
+  void shoot() {
+    /* // NO SHOOTING IN THIS GAME! */
   }
 
   void update(float dt) {
@@ -65,12 +78,23 @@ class Player extends Creature {
   }
 
   void draw() {
+    // collision sound
+    engine.debug = ""+didCollide;
+    /*if (didCollide && !prevCollide)
+      resources.sounds.get("transfer").loop();
+    else if (prevCollide && !didCollide)
+      resources.sounds.get("transfer").pause();*/
+    prevCollide = didCollide;
+    didCollide = false;
+  
+
     scaleFactor = spriteRadius/radius;
     if (scaleFactor >= 30) {
       scaleFactor = 1;
       die();
       return;
     }
+    
     fill(color(40, 200, 40));
     pushMatrix();
       translate(pos.x, pos.y);

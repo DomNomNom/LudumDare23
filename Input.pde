@@ -27,6 +27,7 @@ class Input {
   void pollEvents() {
     while (! keyCodeQueue.isEmpty())
       handleKeyEvent(keyCodeQueue.poll(), pressDirQueue.poll());
+    //engine.debug = control.toString();
   }
 
   boolean isEvent(String event) { // small funtion to save the coder some typing
