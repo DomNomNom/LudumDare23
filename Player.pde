@@ -76,7 +76,7 @@ class Player extends Creature {
 
   void draw() {
     // collision sound
-    engine.debug = ""+didCollide;
+    //engine.debug = ""+didCollide;
     if (didCollide && !prevCollide)
       resources.sounds.get("transfer").loop();
     else if (prevCollide && !didCollide)

@@ -40,6 +40,20 @@ class Level {
     }
   }
   
+  boolean winCondition() {
+    List<Entity> creatures = engine.groups.get(group.creature);
+    if (creatures.size() == 1)
+      return (creatures.get(0) == engine.player);
+    return false;
+  }
+  
+  boolean failCondition() {
+    return (
+      (engine.gameState.currentState == state.game) && 
+      (engine.player == null || engine.player.dead)
+    );
+  }
+  
   void addPlayer(Player p) {
     engine.player = p;
     engine.addEntity(p);

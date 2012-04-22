@@ -17,7 +17,6 @@ class Engine {
 
   Camera camera;
   
-  Level level;
   GameState gameState = new GameState();
 
   Engine() {
@@ -71,10 +70,7 @@ class Engine {
     
     text(debug, center.x, .1*center.y);
     
-    // game over check
-    if (gameState.currentState == state.game && (player == null || player.dead) ) 
-      gameState.changeState(state.gameOver);
-    
+    gameState.checkLevelChange();
     //println(entities); // DEBUG
   }
 
@@ -96,6 +92,7 @@ class Engine {
   }
 
   void removeEntity(Entity e) {
+    //e.die();
     entities.remove(e);
     for (group g : e.groups) // remove the enity from the groups it belongs to
       groups.get(g).remove(e);
@@ -179,9 +176,36 @@ class Engine {
 
     state currentState = state.gameInit; // use changeState() which does proper job of changing this with safe transitions
 
+    Level level;
     int levelCount = 1;
+    final int maxLevel = 2;
 
     GameState() { }
+
+    void nextLevel() {
+      ++levelCount;
+      if (levelCount > maxLevel) {
+        debug = "You win";
+        return;
+      }
+      loadLevel(levelCount);
+    }
+
+    void checkLevelChange() {
+      if (level == null) return;
+      
+      if (level.winCondition())
+        nextLevel();
+      else if (level.failCondition())
+        changeState(state.gameOver);
+    }
+
+    void loadLevel(int levelCount) {
+      println("loadlevel");
+      player = null;
+      removeEntityGroup(group.player);
+      level = new Level(levelCount);
+    }
 
     // has lots of code defining safe transitions and what should be done
     void changeState(state changeTo) {
@@ -253,11 +277,6 @@ class Engine {
       else
         println("OMG, you totally did not just try to change from '" +currentState+ "' to '" +changeTo+ "'. I hate you.");
     }
-  }
-  
-  void loadLevel(int levelCount) {
-    println("loadlevel");
-    level = new Level(levelCount);
   }
 }
 
