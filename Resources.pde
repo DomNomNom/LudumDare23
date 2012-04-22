@@ -14,9 +14,7 @@ class Resources {
 
     fonts.put("pauseLabel", loadFont("fonts/CharterBT-Italic-48.vlw"));
 
-    sounds.put("transfer", minim.loadFile("audio/transfer.wav"));
-    sounds.get("transfer").play();
-    println("play: " + sounds.get("transfer").isPlaying());
+    sounds.put("transfer", minim.loadFile("audio/transfer2.wav"));
   }
 
   // stop all audio

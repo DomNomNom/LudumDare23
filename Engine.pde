@@ -210,6 +210,7 @@ class Engine {
           for (Entity e : groups.get(group.game)) e.updating = true; // unfreeze game
         }
         else if (changeTo == state.menu) {
+          resources.sounds.get("transfer").pause();
           removeEntityGroup(group.game);
           removeEntityGroup(group.pauseMenu);
           addEntity(new Menu());
@@ -223,10 +224,12 @@ class Engine {
           addEntity(new PauseMenu());
         }
         else if (changeTo == state.gameOver) {
+          resources.sounds.get("transfer").pause();
           removeEntityGroup(group.game);
           addEntity(new GameOver());
         }
         else if (changeTo == state.game) {
+          resources.sounds.get("transfer").pause();
           removeEntityGroup(group.game);
           loadLevel(levelCount);
         }

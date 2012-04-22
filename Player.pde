@@ -24,10 +24,6 @@ class Player extends Creature {
     animation = resources.animations.get("player");
     scaleFactor = 1;
     didCollide = false;
-    
-    resources.sounds.get("transfer").loop();
-    resources.sounds.get("transfer").play();
-    
   }
 
   boolean isBigger(Creature c) {
@@ -74,16 +70,17 @@ class Player extends Creature {
 
   void die() {
     println("OMG THE PLAYER DIED!");
+    resources.sounds.get("transfer").pause();
     dead = true;
   }
 
   void draw() {
     // collision sound
     engine.debug = ""+didCollide;
-    /*if (didCollide && !prevCollide)
+    if (didCollide && !prevCollide)
       resources.sounds.get("transfer").loop();
     else if (prevCollide && !didCollide)
-      resources.sounds.get("transfer").pause();*/
+      resources.sounds.get("transfer").pause();
     prevCollide = didCollide;
     didCollide = false;
   
