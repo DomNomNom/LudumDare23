@@ -24,7 +24,10 @@ class LevelTransition extends Entity {
     if (!success) {
       String levelHint;
       switch (level) {
-        default: levelHint = "No hints for this level";
+               case 1:  levelHint = "Bigger ones eat smaller ones";
+        break; case 2:  levelHint = "Sometimes you have to explore a little";
+        break; case 3:  levelHint = "Going too fast may hurt you";
+        break; default: levelHint = "No hints for this level";
       }
       text("hint: " + levelHint, center.x, 1.6*center.y);
     }
