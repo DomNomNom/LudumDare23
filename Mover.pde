@@ -9,6 +9,11 @@ class Mover extends Creature {
   }
 
   void draw() { // TODO: make a animation for this
+    if (engine.player.isBigger(this)) 
+      fill(#2F8FC1);
+    else
+      fill(#C12F2F);
+
     translate(pos.x, pos.y);
     if (animation == null)
       ellipse(0, 0, radius, radius);
