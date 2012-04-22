@@ -13,7 +13,7 @@ Engine engine;
 
 void setup() {
   // graphics options
-  size(500, 500, P2D);
+  size(500, 500);
   smooth();
   fill(200);
   noStroke();

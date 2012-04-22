@@ -177,7 +177,7 @@ class Engine {
     state currentState = state.gameInit; // use changeState() which does proper job of changing this with safe transitions
 
     Level level;
-    int levelCount = 3;
+    int levelCount = 1;
     final int maxLevel = 3;
 
     GameState() { }
@@ -189,7 +189,8 @@ class Engine {
         debug = "You win.\nThe universe is pretty tiny now";
         return;
       }
-      loadLevel(levelCount);
+      
+      changeState(state.levelTransition);
     }
 
     void checkLevelChange() {
@@ -249,14 +250,17 @@ class Engine {
           addEntity(new PauseMenu());
         }
         else if (changeTo == state.gameOver) {
-          resources.sounds.get("transfer").pause();
           removeEntityGroup(group.game);
           addEntity(new GameOver());
         }
-        else if (changeTo == state.game) {
-          resources.sounds.get("transfer").pause();
+        else if (changeTo == state.levelTransition) {
           removeEntityGroup(group.game);
-          loadLevel(levelCount);
+          addEntity(new LevelTransition(levelCount, true));
+        }
+        else if (changeTo == state.game) {
+          removeEntityGroup(group.game);
+          changeTo = state.levelTransition;
+          addEntity(new LevelTransition(levelCount, false));
         }
         else wasSafe = false;
       }
@@ -265,12 +269,20 @@ class Engine {
           removeEntityGroup(group.menu);
           loadLevel(levelCount);
         }
-        else if (changeTo == state.menu) {
+        else if (changeTo == state.levelTransition) {
           removeEntityGroup(group.menu);
-          addEntity(new Menu());
+          addEntity(new LevelTransition(levelCount, false));
         }
         else wasSafe = false;
       }
+      else if (currentState == state.levelTransition) {
+        if (changeTo == state.game) {
+          removeEntityGroup(group.menu);
+          loadLevel(levelCount);
+        }
+        else wasSafe = false;
+      }
+      
       else wasSafe = false;
 
       if (wasSafe)

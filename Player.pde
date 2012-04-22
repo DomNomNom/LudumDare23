@@ -96,10 +96,10 @@ class Player extends Creature {
     pushMatrix();
       translate(pos.x, pos.y);
       rotate(angle);
-      noSmooth(); // note: smoothed image + rotating + smoothing = crap
+      //noSmooth(); // note: smoothed image + rotating + smoothing = crap
       scale(1.0/scaleFactor);
       animation.draw();
-      smooth();
+      //smooth();
     popMatrix();
     
     // Target line

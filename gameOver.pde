@@ -25,7 +25,6 @@ class GameOver extends Entity {
     
     text("Press r to retry", center.x, 1.3*center.y);
     
-    text("Press spacebar to return to menu", center.x, 1.6*center.y);
-    text("(DISCARDS ALL GAME PROGRESS)", center.x, 1.7*center.y);
+    text("Press spacebar to return to view a hint", center.x, 1.6*center.y);
   }
 }

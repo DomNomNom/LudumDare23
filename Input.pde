@@ -52,8 +52,10 @@ class Input {
       else if (isEvent("select")) {
         if (engine.gameState.currentState == state.menu)
           engine.gameState.changeState(state.game);
-        else
-          engine.gameState.changeState(state.menu);
+        else if (engine.gameState.currentState == state.levelTransition)
+          engine.gameState.changeState(state.game);
+        else if (engine.gameState.currentState == state.gameOver)
+          engine.gameState.changeState(state.levelTransition);
       }
     }
   }
