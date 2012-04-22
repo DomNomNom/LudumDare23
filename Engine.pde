@@ -195,6 +195,7 @@ class Engine {
 
     void checkLevelChange() {
       if (level == null) return;
+      if (currentState == state.levelTransition) return;
       
       if (level.winCondition())
         nextLevel();
@@ -254,7 +255,6 @@ class Engine {
           addEntity(new GameOver());
         }
         else if (changeTo == state.levelTransition) {
-          removeEntityGroup(group.game);
           addEntity(new LevelTransition(levelCount, true));
         }
         else if (changeTo == state.game) {
@@ -277,6 +277,7 @@ class Engine {
       }
       else if (currentState == state.levelTransition) {
         if (changeTo == state.game) {
+          removeEntityGroup(group.game);
           removeEntityGroup(group.menu);
           loadLevel(levelCount);
         }
