@@ -65,7 +65,14 @@ class Input {
     else if (isEvent("left" )) control.x -= pressDir;
     else if (isEvent("right")) control.x += pressDir;
     else return false;
+
+    control.x = constrain(control.x, -1, 1); // watch out for key-repeat!
+    control.y = constrain(control.y, -1, 1);
     return true;
+  }
+
+  void resetControl() {
+    control = new PVector(0, 0);
   }
 
   void initKeyMap() {

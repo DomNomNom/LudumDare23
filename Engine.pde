@@ -13,6 +13,7 @@ class Engine {
   private HashMap<group, ArrayList<Entity>> groups = new HashMap<group, ArrayList<Entity>>();
   float prevTime;
 
+  String debug = "";
 
   Camera camera;
   
@@ -67,6 +68,9 @@ class Engine {
       popStyle(); popMatrix(); // ensure no graphical settings are transfered
     }  
     removeDeadEntities();
+    
+    text(debug, center.x, .1*center.y);
+    
     // game over check
     if (gameState.currentState == state.game && (player == null || player.dead) ) 
       gameState.changeState(state.gameOver);
