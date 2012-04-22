@@ -10,19 +10,17 @@ class Animation {
 
   // Constructor for a single-image animation. file specifies the image file in data/images/
   Animation(String file) {
-    images = new PImage[] { loadImage("/data/images/" + file) };
+    images = new PImage[] { loadImage("images/" + file) };
     frameCount = images.length;
   }
 
   // Constructor for the animation. folder corresponds to a folder containing the images in data/animations/
-  Animation(String folder, float period, boolean pingPong) {
+  Animation(String fileStart, int count, float period, boolean pingPong) {
     this.pingPong = pingPong;
     this.period = period;
-    folder = sketchPath + "/data/animations/" + folder + "/";
-    String[] fileNames = sort(new File(folder).list());
-    images = new PImage[fileNames.length];
-    for (int i=0; i<fileNames.length; ++i)
-      images[i] = loadImage(folder + fileNames[i]);
+    images = new PImage[count];
+    for (int i=0; i<count; ++i)
+      images[i] = loadImage("images/" +fileStart + i + ".png");
     frameCount = images.length;
   }
 
