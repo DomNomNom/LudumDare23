@@ -68,7 +68,7 @@ class Engine {
     }  
     removeDeadEntities();
     
-    text(debug, center.x, .1*center.y);
+    text(debug, center.x, 0.15*center.y);
     
     gameState.checkLevelChange();
     //println(entities); // DEBUG
@@ -92,7 +92,7 @@ class Engine {
   }
 
   void removeEntity(Entity e) {
-    //e.die();
+    e.die();
     entities.remove(e);
     for (group g : e.groups) // remove the enity from the groups it belongs to
       groups.get(g).remove(e);
@@ -177,15 +177,16 @@ class Engine {
     state currentState = state.gameInit; // use changeState() which does proper job of changing this with safe transitions
 
     Level level;
-    int levelCount = 1;
-    final int maxLevel = 2;
+    int levelCount = 3;
+    final int maxLevel = 3;
 
     GameState() { }
 
     void nextLevel() {
       ++levelCount;
       if (levelCount > maxLevel) {
-        debug = "You win";
+        levelCount = maxLevel;
+        debug = "You win.\nThe universe is pretty tiny now";
         return;
       }
       loadLevel(levelCount);
@@ -201,7 +202,7 @@ class Engine {
     }
 
     void loadLevel(int levelCount) {
-      println("loadlevel");
+      println("loadlevel: " + levelCount);
       player = null;
       removeEntityGroup(group.player);
       level = new Level(levelCount);

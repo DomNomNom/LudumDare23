@@ -19,7 +19,8 @@ class Level {
             hasPlayer = true;
             addPlayer(new Player(
               Float.parseFloat(values[0]), 
-              Float.parseFloat(values[1])
+              Float.parseFloat(values[1]), 
+              Float.parseFloat(values[2])
             ));
           }
         }
@@ -36,7 +37,7 @@ class Level {
     
     if (!hasPlayer) {
       println("PLAYER NOT DEFINED!!!");
-      addPlayer(new Player(350, 300));
+      addPlayer(new Player(350, 300, 50));
     }
   }
   

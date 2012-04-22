@@ -15,14 +15,14 @@ class Player extends Creature {
   boolean prevCollide;
   
 
-  Player(float x, float y) {
-    super(spriteRadius);
+  Player(float x, float y, float rad) {
+    super(rad);
     pos = new PVector(x, y);
     target = new PVector(0,0);
     groups = new group[] {group.game, group.player, group.creature};
     drawLayer = layer.player;
     animation = resources.animations.get("player");
-    scaleFactor = 1;
+    scaleFactor = rad/spriteRadius;
     didCollide = false;
   }
 
