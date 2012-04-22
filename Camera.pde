@@ -10,7 +10,7 @@ class Camera {
     scaleFactor = engine.player.scaleFactor;
     
     PVector translation = PVector.sub(center, engine.player.pos); // deep copy and opposite direction
-    PVector lookahead = PVector.mult(engine.player.vel, -500);
+    PVector lookahead = PVector.mult(engine.player.vel, -300);
     translation.add(lookahead);
     translation.mult(scaleFactor);
     
