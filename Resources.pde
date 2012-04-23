@@ -11,6 +11,7 @@ class Resources {
   
   Resources() {
     animations.put("player", new Animation("player_0", 7, 1000, true));
+    animations.put("mover", new Animation("mover.png"));
 
     fonts.put("pauseLabel", loadFont("fonts/CharterBT-Italic-48.vlw"));
 
