@@ -14,6 +14,16 @@ class Mover extends Creature {
     animation = resources.animations.get("mover");
     angle = random(TWO_PI);
   }
+  Mover(float x, float y, float radius, float velX, float velY) {
+    super(radius);
+    scaleFactor = radius/spriteRadius;
+    pos = new PVector( x,  y);
+    vel = new PVector(velX, velY);
+    drawLayer = layer.enemy;
+    groups = new group[] {group.game, group.enemy, group.creature};
+    animation = resources.animations.get("mover");
+    angle = random(TWO_PI);
+  }
 
   void draw() { // TODO: make a animation for this
     color drawColor;

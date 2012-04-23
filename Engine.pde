@@ -178,7 +178,7 @@ class Engine {
 
     Level level;
     int levelCount = 1;
-    final int maxLevel = 3;
+    final int maxLevel = 4;
 
     GameState() { }
 

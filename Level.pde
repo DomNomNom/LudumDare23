@@ -26,11 +26,23 @@ class Level {
         }
         else { // we have a Mover
           int targetPriority = Integer.parseInt(key);
-          engine.addEntity(new Mover(
-            Float.parseFloat(values[0]),
-            Float.parseFloat(values[1]),
-            Float.parseFloat(values[2])
-          ));
+          println(values.length);
+          if (values.length == 3) {
+            engine.addEntity(new Mover(
+              Float.parseFloat(values[0]),
+              Float.parseFloat(values[1]),
+              Float.parseFloat(values[2])
+            ));
+          }
+          else {
+            engine.addEntity(new Mover(
+              Float.parseFloat(values[0]),
+              Float.parseFloat(values[1]),
+              Float.parseFloat(values[2]),
+              Float.parseFloat(values[3]),
+              Float.parseFloat(values[4])
+            ));
+          }
         }
       }
     }
