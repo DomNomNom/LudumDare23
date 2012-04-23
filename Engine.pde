@@ -226,6 +226,7 @@ class Engine {
         if (changeTo == state.game) {
           removeEntityGroup(group.menu);
           loadLevel(levelCount);
+          debug = "press h for help";
         }
         else wasSafe = false;
       }
@@ -244,11 +245,24 @@ class Engine {
         }
         else wasSafe = false;
       }
+      else if (currentState == state.help) {
+        if (changeTo == state.help) // special case: pausing again toggles back to game
+          changeTo = state.game;
+        if (changeTo == state.game) {
+          removeEntityGroup(group.menu);
+          for (Entity e : groups.get(group.game)) e.updating = true; // unfreeze game
+        }
+      }
       else if (currentState == state.game) {
         if (changeTo == state.paused) {
           for (Entity e : groups.get(group.game))
             e.updating = false; // freeze game
           addEntity(new PauseMenu());
+        }
+        else if (changeTo == state.help) {
+          for (Entity e : groups.get(group.game))
+            e.updating = false; // freeze game
+          addEntity(new HelpMenu());
         }
         else if (changeTo == state.gameOver) {
           removeEntityGroup(group.game);

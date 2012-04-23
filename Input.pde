@@ -47,6 +47,8 @@ class Input {
     if (pressDir == 1) { // keyDown event
       if (isEvent("pause"))
         engine.gameState.changeState(state.paused); // changeState is smart enough to unpause if paused
+      if (isEvent("help"))
+        engine.gameState.changeState(state.help); // changeState is smart enough to unpause if paused
       else if (isEvent("retry")) 
         engine.gameState.changeState(state.game);
       else if (isEvent("select")) {

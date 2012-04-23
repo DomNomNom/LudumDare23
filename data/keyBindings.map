@@ -8,6 +8,7 @@ comments are just any lines that do not include the seperator (double lined righ
 
 pause=>p
 retry=>r
+help=>h
 select=>SPACE
 exit_game=>ESCAPE
 

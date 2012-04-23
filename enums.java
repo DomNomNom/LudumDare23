@@ -15,6 +15,7 @@ enum state {
   game,
   gameOver,
   levelTransition,
+  help,
 }
 
 // groups that an entity can be in. they are not mutually exclusive.
